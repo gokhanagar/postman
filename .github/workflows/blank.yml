@@ -35,6 +35,19 @@ jobs:
          npm install -g newman
          npm install -g newman-reporter-htmlextra
 
+      - name: Debug - List files in the repository
+        run: |
+         echo "Listing all files in the repository:"
+         ls -R ${{ github.workspace }}
+
+      - name: Debug - List files in the environments directory
+        run: |
+         echo "Listing files in the environments directory:"
+         ls -la ${{ github.workspace }}/postman/environments/
+
+      - name: Debug - Show Newman version
+        run: newman --version    
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -47,5 +60,5 @@ jobs:
         run: postman login --with-api-key ${{ secrets.GOKHAN_KEY }}
       - name: Run API tests with Newman and generate HTMLExtra report
         run: |
-         newman run "${{ github.workspace }}/postman/collections/Restful.postman_collection.json" -e "${{ github.workspace }}/postman/environments/stage.postman_environment.json" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
+         newman run "${{ github.workspace }}/postman/collections/Restful.json" -e "${{ github.workspace }}/postman/environments/stage.json" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
           
