@@ -54,7 +54,8 @@ jobs:
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-      
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.GOKHAN_KEY }}
       - name: Run API tests with Newman and generate HTMLExtra report
         run: |
          newman run "${{ github.workspace }}/postman/collections/Restful.json" -e "${{ github.workspace }}/postman/environments/stage.json" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
