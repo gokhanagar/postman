@@ -25,6 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Newman
+        run: npm install -g newman
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -35,7 +43,10 @@ jobs:
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.GOKHAN_KEY }}
-      - name: Run API tests
+      - name: Run API tests with Newman and generate HTMLExtra report
         run: |
-          postman collection run "${{ github.workspace }}/postman/collections/Restful.json" -e "21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a"
+          newman run "${{ github.workspace }}/postman/collections/Restful.json" \
+          -e "21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a" \
+          --reporters cli,html,htmlextra \
+          --reporter-htmlextra-export "${{ github.workspace }}/reports/htmlextra-report.html"
           
