@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "002547e9-6f5f-4ee6-9e23-7f9e1f33fafa",
+		"name": "Restful",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "21344086-002547e9-6f5f-4ee6-9e23-7f9e1f33fafa"
+	},
+	"item": [
+		{
+			"name": "herukuapp",
+			"item": [
+				{
+					"name": "CreateBooking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "dcac177b-8120-443a-b176-50b37b9b8d6c",
+								"exec": [
+									"console.clear();",
+									"",
+									"let firstname = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"",
+									"//pm.collectionVariables.set(\"firstname\", firstname);",
+									"",
+									"",
+									"let lastname = pm.variables.replaceIn('{{$randomLastName}}');",
+									"",
+									"//pm.collectionVariables.set(\"lastname\", lastname);",
+									"",
+									"",
+									"let depositpaid = pm.variables.replaceIn('{{$randomBoolean}}');",
+									"pm.collectionVariables.set(\"depositpaid\", depositpaid);",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddd14fce-a0de-4eb7-92aa-8e72cc141bfd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"var requestBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"",
+									"pm.test(\"check firstname\", function () {",
+									"    ",
+									"    pm.expect(jsonData.booking.firstname).to.eql(requestBody.firstname);",
+									"",
+									"});",
+									"",
+									"pm.test(\"check lastname\", function () {",
+									"    ",
+									"    pm.expect(jsonData.booking.lastname).to.eql(requestBody.lastname);",
+									"",
+									"});",
+									"",
+									"const id = jsonData.bookingid;",
+									"pm.collectionVariables.set(\"id\", id);",
+									"",
+									"pm.test(\"Test data type of response\",()=>{",
+									"",
+									"",
+									"    pm.expect(jsonData.booking.firstname).to.be.a(\"string\");",
+									"    pm.expect(jsonData.booking.lastname).to.be.a(\"string\");",
+									"    pm.expect(jsonData.booking.lastname).to.not.be.null;",
+									"    pm.expect(jsonData.booking.lastname).to.not.be.undefined;",
+									"    pm.expect(jsonData.booking.totalprice).to.be.a(\"number\");",
+									"",
+									"",
+									"})",
+									"",
+									"pm.collectionVariables.unset(\"depositpaid\");",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "3ec01108-fabd-40cb-9049-c63fba8b3454",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"firstname\" : \"{{firstName}}\",\n    \"lastname\" : \"{{lastName}}\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : {{depositpaid}},\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"Breakfast\"\n}\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://restful-booker.herokuapp.com/booking",
+							"protocol": "https",
+							"host": [
+								"restful-booker",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBooking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66aff2a7-985d-43ef-938e-e8f378352fe8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "8a245bba-7c0c-477d-975d-c17aa68b01ef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://restful-booker.herokuapp.com/booking/{{id}}",
+							"protocol": "https",
+							"host": [
+								"restful-booker",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"booking",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBooking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4886b39e-0d58-4b44-a5e6-2c0273f3a52c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"Created\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "0a98360c-8476-4aec-b614-c7ca532483e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://restful-booker.herokuapp.com/booking/{{id}}",
+							"protocol": "https",
+							"host": [
+								"restful-booker",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"booking",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "842fa327-b3ca-46f3-bb7f-178b97cb283d"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "929e78b0-0c1f-4a06-8508-b95b53275b5d",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "55ec7ad7-1e69-4cc8-a70c-d0854e48daa4",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "cfb77f11-ca5c-438c-a4dd-3e04500a86f5",
+			"key": "firstname",
+			"value": ""
+		},
+		{
+			"id": "94f8859e-294e-43b9-acc2-4cf089ea99f4",
+			"key": "lastname",
+			"value": ""
+		},
+		{
+			"id": "77ee2f24-3b83-4547-b584-c99c1979d92c",
+			"key": "id",
+			"value": ""
+		}
+	]
+}
