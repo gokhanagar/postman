@@ -34,19 +34,17 @@ jobs:
         run: |
          npm install -g newman
          npm install -g newman-reporter-htmlextra
-
-      - name: Debug - List files in the repository
+      - name: Fetch Postman Collection
         run: |
-         echo "Listing all files in the repository:"
-         ls -R ${{ github.workspace }}
+         curl -X GET "https://api.getpostman.com/collections/21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a" \
+         -H "X-Api-Key: ${{ secrets.GOKHAN_KEY }}" \
+         -o collection.json
 
-      - name: Debug - List files in the environments directory
+      - name: Fetch Postman Environment
         run: |
-         echo "Listing files in the environments directory:"
-         ls -la ${{ github.workspace }}/postman/environments/
-
-      - name: Debug - Show Newman version
-        run: newman --version    
+         curl -X GET "https://api.getpostman.com/environments/21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a" \
+         -H "X-Api-Key: ${{ secrets.GOKHAN_KEY }}" \
+         -o environment.json
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -56,8 +54,7 @@ jobs:
       - name: Install Postman CLI
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.GOKHAN_KEY }}
+      
       - name: Run API tests with Newman and generate HTMLExtra report
         run: |
          newman run "${{ github.workspace }}/postman/collections/Restful.json" -e "${{ github.workspace }}/postman/environments/stage.json" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
