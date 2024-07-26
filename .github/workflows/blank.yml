@@ -45,6 +45,11 @@ jobs:
          curl -X GET "https://api.getpostman.com/environments/21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a" \
          -H "X-Api-Key: ${{ secrets.GOKHAN_KEY }}" \
          -o environment.json
+          
+      - name: Transform Environment File
+        run: |
+         jq '.environment' environment.json > environment_transformed.json
+
 
       - name: Debug - Show contents of environment file
         run: |
