@@ -47,5 +47,5 @@ jobs:
         run: postman login --with-api-key ${{ secrets.GOKHAN_KEY }}
       - name: Run API tests with Newman and generate HTMLExtra report
         run: |
-         newman run "${{ github.workspace }}/postman/collections/Restful.json" -e "${{ github.workspace }}/environments/stage.postman_environment.json" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
+         newman run "${{ github.workspace }}/postman/collections/Restful.json" -e "21344086-e7c005e1-0a0a-46f8-8356-37562aeff59a" --reporters cli,htmlextra --reporter-htmlextra-export "newman-report.html"
           
