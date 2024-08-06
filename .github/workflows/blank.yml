@@ -34,11 +34,7 @@ jobs:
         run: |
          npm install -g newman
          npm install -g newman-reporter-htmlextra
-      - name: Fetch Postman Collection
-        run: |
-         curl -X GET "https://api.getpostman.com/collections/21344086-b0b9f691-46bd-4cd5-9399-48a1c7ea8ce4" \
-         -H "X-Api-Key: ${{ secrets.GOKHAN_KEY }}" \
-         -o collection.json
+      
 
       - name: Fetch Postman Environment
         run: |
